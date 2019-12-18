@@ -1,0 +1,11 @@
+function mine_julian_coin(s::String)
+                         i = 0
+                         zero = "000"
+                         while true
+                             n = bytes2hex(md5(s*string(i)))
+                             if n[1:3] == zero && n[30:32]== zero
+                                  return (key = string(i), hash = n )
+                             end     
+                             i += 1     
+                          end
+              end
