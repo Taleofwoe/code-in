@@ -16,7 +16,6 @@ end
 function mine_julian_coin_multi(s::String)
     even = @spawn mine_julian_coin_incr(s, 0, 2)
     odd = mine_julian_coin_incr(s, 1, 2)
-
-    wait(even)
-    return min(even[1], odd[1])
+    
+    return min(fetch(even)[1], odd[1])
 end
