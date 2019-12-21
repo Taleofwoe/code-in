@@ -1,0 +1,22 @@
+using MD5
+import Base.Threads.@spawn
+
+function mine_julian_coin_incr(s::String, i::Integer, incr::Integer)
+    # i = 0
+    zero = "000"
+    while true
+         n = bytes2hex(md5(s*string(i)))
+         if n[1:3] == zero && n[30:32]== zero
+            return (key = i, hash = n )
+         end     
+         i += incr    
+    end
+end
+
+function mine_julian_coin_multi(s::String)
+    even = @spawn mine_julian_coin_incr(s, 0, 2)
+    odd = mine_julian_coin_incr(s, 1, 2)
+
+    wait(even)
+    return min(even[1], odd[1])
+end
